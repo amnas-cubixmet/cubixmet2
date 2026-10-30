@@ -18,6 +18,7 @@ export const projects: Project[] = [
     id: "blendopia-web",
     website: "https://www.blendopia.com/",
     name: "Blendopia",
+    video: "/videos/blendopia.mov",
     category: "Dynamic Website",
     description:
       "A modern, brand-focused digital experience built to present Blendopia online.",
@@ -28,6 +29,7 @@ export const projects: Project[] = [
   {
     id: "al-masar-electrical-web",
     website: "https://www.almasarelectrical.com/",
+    video: "/videos/al-masar-electrical.mov",
     name: "Al Masar Electrical",
     category: "Dynamic Website",
     description:
@@ -40,6 +42,7 @@ export const projects: Project[] = [
     id: "zamirzac-erp-web",
     website: "https://demo-erp.zamirzac.com/",
     name: "Zamirzac ERP Demo",
+    video: "/videos/zamirzac-erp.mov",
     category: "Dynamic Website",
     description:
       "Explore the Zamirzac ERP demo environment for business management workflows.",
