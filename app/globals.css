@@ -1,0 +1,888 @@
+@import "tailwindcss";
+
+:root {
+  --background: #050505;
+  --foreground: #f5f5f5;
+  --accent: #1677FF;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+  color: var(--foreground);
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  overflow-x: clip;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  margin: 0;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--accent);
+  color: #050505;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 34px, 0);
+  transition:
+    opacity 700ms cubic-bezier(0.2, 0.65, 0.25, 1),
+    transform 700ms cubic-bezier(0.2, 0.65, 0.25, 1);
+  will-change: transform, opacity;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.hero-card {
+  transform: translateZ(0);
+  transition:
+    transform 450ms cubic-bezier(0.2, 0.65, 0.25, 1),
+    border-color 450ms ease;
+}
+
+.hero-card:hover {
+  transform: translate3d(0, -6px, 0);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.service-visual::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(22, 119, 255, 0.09), transparent 30%),
+    conic-gradient(from 20deg, transparent 0deg 60deg, rgba(255, 255, 255, 0.035) 80deg, transparent 110deg 360deg);
+  animation: orbit 16s linear infinite;
+}
+
+@keyframes orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .reveal {
+    transform: translate3d(0, 20px, 0);
+    transition-duration: 560ms;
+  }
+
+  .hero-card:hover {
+    transform: none;
+  }
+
+  .service-visual::before {
+    animation-duration: 22s;
+  }
+}
+
+
+
+
+
+.site-wrapper {
+  width: 100%;
+  max-width: 1500px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+.header-wrapper {
+  width: 80%;
+  max-width: 1500px;
+  margin-inline: auto;
+}
+
+@media (max-width: 767px) {
+  .header-wrapper {
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 20px;
+  }
+
+  .mobile-menu-panel {
+    scrollbar-width: none;
+  }
+
+  .mobile-menu-panel::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.section-space {
+  padding-block: clamp(5rem, 8vw, 8rem);
+}
+
+.section-label {
+  margin-bottom: 1.25rem;
+  font-size: 10px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #1677FF;
+}
+
+.section-title {
+  font-size: clamp(2.5rem, 5.3vw, 6.2rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+}
+
+.form-line {
+  margin-top: 0.5rem;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  background: transparent;
+  padding-block: 0.75rem;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.form-line::placeholder {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.form-line:focus {
+  border-bottom-color: #000;
+}
+
+@media (min-width: 768px) {
+  .site-wrapper {
+    padding-inline: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .section-space {
+    padding-block: 5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .site-wrapper {
+    padding-inline: 40px;
+  }
+}
+
+
+.hero-text-wrapper {
+  width: 80%;
+  max-width: 1500px;
+  margin-inline: auto;
+}
+
+@media (max-width: 767px) {
+  .hero-text-wrapper {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-inline: 0;
+    padding-inline: 20px;
+  }
+}
+
+
+/* Hero carousel: stable, motion-driven cards instead of remounting slides. */
+.hero-slider-stage {
+  height: clamp(220px, 61vw, 280px);
+  isolation: isolate;
+  --hero-drag: 0px;
+}
+
+.hero-slider-card {
+  --hero-x: 0px;
+  --hero-scale: 0.58;
+  --hero-opacity: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(74vw, 360px);
+  height: clamp(185px, 55vw, 250px);
+  z-index: 1;
+  opacity: var(--hero-opacity);
+  transform: translate3d(
+      calc(-50% + var(--hero-x) + var(--hero-drag)),
+      -50%,
+      0
+    ) scale(var(--hero-scale));
+  transform-origin: center center;
+  filter: brightness(0.77);
+  pointer-events: none;
+  transition:
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 480ms ease,
+    filter 560ms ease,
+    box-shadow 620ms ease,
+    border-color 420ms ease;
+  will-change: transform, opacity;
+}
+
+.hero-slider-card[data-offset="0"] {
+  --hero-x: 0px;
+  --hero-scale: 1.05;
+  --hero-opacity: 1;
+  z-index: 6;
+  filter: brightness(1);
+  border-color: rgba(22, 119, 255, 0.92);
+  box-shadow: 0 22px 65px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(22, 119, 255, 0.2);
+}
+
+.hero-slider-card[data-offset="-1"] {
+  --hero-x: max(-68vw, -350px);
+  --hero-scale: 0.74;
+  --hero-opacity: 0.62;
+  z-index: 5;
+}
+
+.hero-slider-card[data-offset="1"] {
+  --hero-x: min(68vw, 350px);
+  --hero-scale: 0.74;
+  --hero-opacity: 0.62;
+  z-index: 5;
+}
+
+.hero-slider-card[data-offset="-2"] {
+  --hero-x: max(-136vw, -700px);
+  --hero-scale: 0.62;
+  --hero-opacity: 0;
+  z-index: 4;
+}
+
+.hero-slider-card[data-offset="2"] {
+  --hero-x: min(136vw, 700px);
+  --hero-scale: 0.62;
+  --hero-opacity: 0;
+  z-index: 4;
+}
+
+.hero-slider-card[data-offset="-3"] {
+  --hero-x: max(-204vw, -1050px);
+  --hero-opacity: 0;
+}
+
+.hero-slider-card[data-offset="3"] {
+  --hero-x: min(204vw, 1050px);
+  --hero-opacity: 0;
+}
+
+.hero-slider-stage[data-dragging="true"] .hero-slider-card {
+  transition: none;
+}
+
+@media (min-width: 768px) {
+  .hero-slider-stage {
+    height: clamp(290px, 31vw, 405px);
+  }
+
+  .hero-slider-card {
+    width: min(44vw, 600px);
+    height: auto;
+    aspect-ratio: 1.72 / 1;
+  }
+
+  .hero-slider-card[data-offset="0"] {
+    --hero-scale: 1.08;
+  }
+
+  .hero-slider-card[data-offset="-1"] {
+    --hero-x: max(-41vw, -650px);
+  }
+
+  .hero-slider-card[data-offset="1"] {
+    --hero-x: min(41vw, 650px);
+  }
+
+  .hero-slider-card[data-offset="-2"] {
+    --hero-x: max(-82vw, -1300px);
+    --hero-opacity: 0.32;
+  }
+
+  .hero-slider-card[data-offset="2"] {
+    --hero-x: min(82vw, 1300px);
+    --hero-opacity: 0.32;
+  }
+
+  .hero-slider-card[data-offset="-3"] {
+    --hero-x: max(-123vw, -1950px);
+  }
+
+  .hero-slider-card[data-offset="3"] {
+    --hero-x: min(123vw, 1950px);
+  }
+}
+
+
+/*
+ * Desktop hero carousel: 3 complete projects with one half-visible
+ * preview on either edge. Adjacent centers sit exactly 25vw apart:
+ * cards are 25vw minus a 20px gutter and +/-2 cards are centered
+ * on the viewport edges, so their inner halves remain visible.
+ * Mobile and tablet positioning above intentionally stays unchanged.
+ */
+@media (min-width: 1024px) {
+  .hero-slider-stage {
+    height: clamp(235px, 20.8vw, 355px);
+  }
+
+  .hero-slider-card {
+    width: min(calc(25vw - 20px), 520px);
+    aspect-ratio: 1.5 / 1;
+  }
+
+  /* Center project lifts forward without changing the five-card layout. */
+  .hero-slider-card[data-offset="0"] {
+    --hero-scale: 1.13;
+    box-shadow: 0 28px 75px rgba(0, 0, 0, 0.65),
+      0 0 0 1px rgba(22, 119, 255, 0.32);
+  }
+
+  .hero-slider-card[data-offset="-1"] {
+    --hero-x: -25vw;
+    --hero-scale: 1;
+    --hero-opacity: 0.9;
+    filter: brightness(0.86);
+  }
+
+  .hero-slider-card[data-offset="1"] {
+    --hero-x: 25vw;
+    --hero-scale: 1;
+    --hero-opacity: 0.9;
+    filter: brightness(0.86);
+  }
+
+  .hero-slider-card[data-offset="-2"] {
+    --hero-x: -50vw;
+    --hero-scale: 1;
+    --hero-opacity: 0.58;
+    filter: brightness(0.72);
+  }
+
+  .hero-slider-card[data-offset="2"] {
+    --hero-x: 50vw;
+    --hero-scale: 1;
+    --hero-opacity: 0.58;
+    filter: brightness(0.72);
+  }
+
+  .hero-slider-card[data-offset="-3"] {
+    --hero-x: -75vw;
+    --hero-opacity: 0;
+  }
+
+  .hero-slider-card[data-offset="3"] {
+    --hero-x: 75vw;
+    --hero-opacity: 0;
+  }
+}
+
+
+
+
+
+.about-wrapper {
+  width: 90%;
+  max-width: 1500px;
+  margin-inline: auto;
+}
+
+@media (max-width: 767px) {
+  .about-wrapper {
+    width: calc(100% - 28px);
+  }
+}
+
+
+.work-wrapper {
+  width: 70%;
+  max-width: 1500px;
+  margin-inline: auto;
+}
+
+@media (max-width: 1023px) {
+  .work-wrapper {
+    width: 88%;
+  }
+}
+
+@media (max-width: 767px) {
+  .work-wrapper {
+    width: calc(100% - 28px);
+  }
+}
+
+
+/* About section: entrance animation with an accessible static fallback. */
+@media (max-width: 767px) {
+  .about-mobile-section {
+    padding-top: 3.5rem;
+    padding-bottom: 4rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .about-pillar + .about-pillar {
+    border-top: 1px solid rgba(255, 255, 255, 0.055);
+  }
+}
+
+
+  .about-motion-ready .about-reveal {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0) scale(0.985);
+    filter: blur(3px);
+    transition:
+      opacity 650ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 720ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 650ms ease;
+  }
+
+  .about-motion-ready .about-reveal.is-about-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: none;
+  }
+
+
+
+
+
+/* Scroll-triggered component/card motion */
+.scroll-card {
+  opacity: 0;
+  transform: translate3d(0, 42px, 0) scale(0.975);
+  filter: blur(6px);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 800ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 700ms ease,
+    border-color 350ms ease,
+    box-shadow 450ms ease;
+  will-change: transform, opacity, filter;
+}
+
+.scroll-card.is-card-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .scroll-card.is-card-visible:hover {
+    transform: translate3d(0, -6px, 0) scale(1.01);
+  }
+}
+
+@media (max-width: 767px) {
+  .scroll-card {
+    transform: translate3d(0, 24px, 0) scale(0.99);
+    filter: blur(3px);
+    transition-duration: 560ms;
+  }
+
+  .scroll-card.is-card-visible {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+
+
+
+
+/* Global text reveal motion across page content */
+.text-scroll-reveal {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  filter: blur(4px);
+  transition:
+    opacity 620ms cubic-bezier(0.22, 1, 0.36, 1) var(--text-delay, 0ms),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1) var(--text-delay, 0ms),
+    filter 620ms ease var(--text-delay, 0ms);
+  will-change: transform, opacity, filter;
+}
+
+.text-scroll-reveal.is-text-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+
+@media (max-width: 767px) {
+  .text-scroll-reveal {
+    transform: translate3d(0, 14px, 0);
+    filter: blur(2px);
+    transition-duration: 520ms;
+  }
+}
+
+
+
+
+
+@media (max-width: 767px) {
+  html,
+  body,
+  main {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overscroll-behavior-x: none;
+  }
+
+  /* Lock the document to vertical gestures, without disabling zoom. */
+  html {
+    overflow-x: hidden !important;
+  }
+
+  body {
+    overflow-x: clip !important;
+    /* Allow intentional horizontal gestures inside the Services tabs. */
+    touch-action: auto;
+  }
+
+  main {
+    overflow-x: clip !important;
+  }
+
+  /* Keep touch swipes available inside the carousel, not on the page. */
+  .hero-slider-stage-mobile {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    touch-action: pan-y pinch-zoom;
+  }
+}
+
+
+/* Portfolio category filters: swipeable one-row navigation on narrow phones.
+   Keep every label on one line without making the page itself overflow. */
+.portfolio-filter-scroll {
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+}
+.portfolio-filter-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Swipeable tabs on tablets; full-width active labels without arrows on
+   phones. Feature items wrap in two columns instead of clipping. */
+.services-phone-controls {
+  user-select: none;
+  /* The tab track reaches both phone edges, with a glimpse of the next slide. */
+  width: calc(100% + 40px);
+  margin-inline: -20px;
+  margin-block: 0;
+}
+
+.services-phone-track {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+}
+
+.services-phone-track::-webkit-scrollbar {
+  display: none;
+}
+
+.services-phone-slide {
+  flex: 0 0 86%;
+  min-width: 0;
+}
+
+.services-phone-track::after {
+  content: "";
+  flex: 0 0 14%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services-phone-track {
+    scroll-behavior: auto;
+  }
+}
+
+@media (max-width: 639px) {
+  .services-mobile-stage {
+    /* Leave room for the fixed header while maximizing image/text space. */
+    padding-top: 56px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom, 0px));
+  }
+
+  .services-mobile-media {
+    height: clamp(125px, 27svh, 240px);
+  }
+
+  .services-mobile-features {
+    column-gap: 10px;
+    row-gap: 6px;
+  }
+
+  .services-mobile-features li {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .services-mobile-stage .service-content-enter h3 {
+    text-wrap: balance;
+  }
+}
+.services-mobile-nav {
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+}
+.services-mobile-nav::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 1023px) and (max-height: 650px) {
+  .services-mobile-stage {
+    padding-top: 60px;
+    padding-bottom: 8px;
+  }
+
+  .services-mobile-media {
+    height: clamp(140px, 26svh, 225px);
+  }
+}
+
+/* Landscape/short phone displays: ensure all of the active service details,
+   including the final feature row, fit inside the pinned viewport. */
+@media (max-width: 639px) and (max-height: 540px) {
+  .services-mobile-stage {
+    padding-top: 45px;
+    padding-bottom: 6px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .services-mobile-stage > div:first-child {
+    margin-bottom: 0;
+  }
+
+  .services-phone-controls {
+    width: calc(100% + 32px);
+    margin-inline: -16px;
+    margin-bottom: 0;
+  }
+
+  .services-phone-controls > div {
+    min-height: 40px;
+  }
+
+  .services-mobile-stage > div[aria-hidden="true"] {
+    margin-bottom: 0;
+  }
+
+  .services-mobile-media {
+    height: clamp(95px, 22svh, 135px);
+  }
+
+  .services-mobile-stage .service-content-enter > div:last-child {
+    padding-top: 8px;
+  }
+
+  .services-mobile-stage .service-content-enter h3 {
+    font-size: clamp(1.15rem, 4.8vw, 1.5rem);
+  }
+
+  .services-mobile-stage .service-content-enter p {
+    margin-top: 6px;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .services-mobile-features {
+    margin-top: 8px;
+    column-gap: 8px;
+    row-gap: 6px;
+  }
+
+  .services-mobile-features li {
+    font-size: 10px;
+    line-height: 1.35;
+  }
+}
+
+.service-active-indicator {
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+@keyframes service-content-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.service-content-enter {
+  animation: service-content-enter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+
+/* Client stories: native touch/trackpad swipe, snap to one card at a time.
+   The slider hides its scrollbar but keeps keyboard and wheel navigation. */
+.client-stories-scroll {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-inline: 0;
+  /* JavaScript controls animated scrolls; recentering clones must be instant. */
+  scroll-behavior: auto;
+}
+.client-stories-scroll::-webkit-scrollbar {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .client-stories-scroll {
+    scroll-behavior: auto;
+  }
+}
+
+
+/* Fixed WhatsApp action: subtle attention cue without affecting page layout. */
+.floating-whatsapp {
+  position: fixed;
+  right: calc(22px + env(safe-area-inset-right, 0px));
+  bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+  z-index: 40;
+  display: grid;
+  width: 60px;
+  height: 60px;
+  place-items: center;
+  border: 2px solid rgba(255, 255, 255, 0.86);
+  border-radius: 50%;
+  background-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 9px 28px rgba(0, 0, 0, 0.35), 0 0 22px rgba(22, 119, 255, 0.2);
+  isolation: isolate;
+  transition: background-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+  animation: floating-whatsapp-bob 4.5s ease-in-out infinite;
+}
+
+.floating-whatsapp:hover {
+  background-color: #348aff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.42), 0 0 24px rgba(22, 119, 255, 0.4);
+  animation-play-state: paused;
+  transform: translateY(-4px);
+}
+
+.floating-whatsapp:active {
+  transform: scale(0.95);
+}
+
+.floating-whatsapp:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 5px;
+  animation-play-state: paused;
+}
+
+.floating-whatsapp__icon {
+  width: 31px;
+  height: 31px;
+  position: relative;
+  z-index: 1;
+}
+
+.floating-whatsapp__pulse {
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border: 2px solid rgba(22, 119, 255, 0.72);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floating-whatsapp-ring 3.3s ease-out infinite;
+}
+
+@keyframes floating-whatsapp-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes floating-whatsapp-ring {
+  0%, 18% { transform: scale(1); opacity: 0; }
+  28% { opacity: .75; }
+  75%, 100% { transform: scale(1.42); opacity: 0; }
+}
+
+@media (max-width: 767px) {
+  .floating-whatsapp {
+    right: calc(16px + env(safe-area-inset-right, 0px));
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    width: 56px;
+    height: 56px;
+  }
+
+  .floating-whatsapp__icon {
+    width: 29px;
+    height: 29px;
+  }
+}
+
+/* A smaller 48px touch target keeps mobile content more visible. */
+@media (max-width: 639px) {
+  .floating-whatsapp {
+    right: calc(12px + env(safe-area-inset-right, 0px));
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    width: 48px;
+    height: 48px;
+  }
+
+  .floating-whatsapp__icon {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-whatsapp,
+  .floating-whatsapp__pulse {
+    animation: none;
+  }
+
+  .floating-whatsapp {
+    transition: none;
+  }
+}
