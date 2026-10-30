@@ -948,23 +948,29 @@ function MarqueeSection() {
   return (
     <section
       aria-label="Our capabilities"
-      className="relative bg-[#050505] py-5 sm:py-6 md:py-8"
+      className="relative overflow-hidden bg-[#050505] py-5 sm:py-6 md:py-8"
       data-no-text-reveal
     >
-      <div className="mx-auto w-[90%] max-w-[1500px]">
-        <div className="flex flex-wrap items-center gap-x-[0.45em] gap-y-3 text-[clamp(1.65rem,4.6vw,4.4rem)] font-semibold leading-[1.12] tracking-[-0.045em]">
-          {marqueeItems.map((item, index) => (
-            <span
-              key={item}
-              className="inline-flex items-center gap-[0.45em] text-white/65 transition-colors duration-300 hover:text-white"
+      <div className="capabilities-marquee">
+        <div className="capabilities-marquee__track text-[clamp(1.65rem,4.6vw,4.4rem)] font-semibold leading-[1.12] tracking-[-0.045em]">
+          {[0, 1].map((copyIndex) => (
+            <div
+              key={copyIndex}
+              className="capabilities-marquee__group flex shrink-0 items-center gap-[0.5em] pr-[0.5em]"
+              aria-hidden={copyIndex === 1 ? true : undefined}
             >
-              <span>{item}</span>
-              {index < marqueeItems.length - 1 && (
-                <span className="inline-flex shrink-0 text-[#1677FF]/85" aria-hidden="true">
-                  <FlowerSeparator />
+              {marqueeItems.map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex shrink-0 items-center gap-[0.5em] whitespace-nowrap text-white/65 transition-colors duration-300 hover:text-white"
+                >
+                  <span>{item}</span>
+                  <span className="inline-flex shrink-0 text-[#1677FF]/85" aria-hidden="true">
+                    <FlowerSeparator />
+                  </span>
                 </span>
-              )}
-            </span>
+              ))}
+            </div>
           ))}
         </div>
       </div>
