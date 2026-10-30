@@ -40,16 +40,13 @@ export default function PortfolioDirectoryCard({
           aria-hidden="true"
           className="pointer-events-none absolute -bottom-28 left-1/4 h-56 w-56 rounded-full border border-[#1677FF]/20"
         />
-        <div className="relative z-30 flex items-start justify-between gap-4">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#87beff]">
-            Cubixmet / {kind}
-          </span>
-          {!href && (
+        {!href && (
+          <div className="relative z-30 flex justify-end">
             <span className="rounded-full border border-white/15 bg-[#111c31] px-2.5 py-1 text-[10px] font-semibold text-white/60">
               Coming Soon
             </span>
-          )}
-        </div>
+          </div>
+        )}
         <div className="relative flex items-end justify-between gap-3">
           <span
             aria-hidden="true"
