@@ -5,11 +5,14 @@ export type ProductListing = {
   category: string;
   description: string;
   href: string | null;
+  /** Video file in public/video/Products; automatically shown after upload. */
+  video?: string;
 };
 
 export const products: ProductListing[] = [
   {
     name: "CubeGears Drive Hub",
+    video: "/video/Products/cubegears-drive-hub.mp4",
     mark: "CG",
     category: "Automotive Software",
     description:
@@ -18,6 +21,7 @@ export const products: ProductListing[] = [
   },
   {
     name: "BiteMyBills",
+    video: "/video/Products/bitemybills.mp4",
     mark: "BB",
     category: "Restaurant Management",
     description:
@@ -26,6 +30,7 @@ export const products: ProductListing[] = [
   },
   {
     name: "CubeSites",
+    video: "/video/Products/cubesites.mp4",
     mark: "CS",
     category: "Websites",
     description:
@@ -34,6 +39,7 @@ export const products: ProductListing[] = [
   },
   {
     name: "CubixSkill",
+    video: "/video/Products/cubixskill.mp4",
     mark: "SK",
     category: "Learning Platform",
     description:
@@ -42,6 +48,7 @@ export const products: ProductListing[] = [
   },
   {
     name: "CubixLog",
+    video: "/video/Products/cubixlog.mp4",
     mark: "CL",
     category: "Digital Product",
     description:
@@ -50,6 +57,7 @@ export const products: ProductListing[] = [
   },
   {
     name: "Influencer",
+    video: "/video/Products/influencer.mp4",
     mark: "IN",
     category: "Creator Tools",
     description:
