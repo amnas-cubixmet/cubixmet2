@@ -3,6 +3,8 @@ import Link from "next/link";
 import SiteHeader from "../../components/home/SiteHeader";
 import SiteFooter from "../../components/home/SiteFooter";
 import { products } from "../../data/products";
+import CardVideoPreview from "../../components/home/CardVideoPreview";
+import { getAvailablePortfolioVideos } from "../../data/portfolioVideos.server";
 
 export const metadata: Metadata = {
   title: "Products | Cubixmet",
@@ -11,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default function ProductsPage() {
+  const videoPaths = getAvailablePortfolioVideos(products.map((item) => item.video));
   return (
     <main className="min-h-screen overflow-x-clip bg-[#050505] pt-[60px] text-white md:pt-[68px]">
       <SiteHeader />
@@ -47,6 +50,14 @@ export default function ProductsPage() {
                   {String(index + 1).padStart(2, "0")}
                 </span>
               </div>
+              {videoPaths.includes(product.video ?? "") && (
+                  <div className="relative mt-6 aspect-[1.9/1] overflow-hidden rounded-[15px] border border-white/10 bg-[#101a2d]">
+                    <span aria-hidden="true" className="absolute inset-0 grid place-items-center text-4xl font-bold text-[#8cc1ff]">
+                      {product.mark}
+                    </span>
+                    <CardVideoPreview video={product.video} name={product.name} />
+                  </div>
+                )}
               <h2 className="relative mt-11 text-[clamp(1.65rem,2.7vw,2.5rem)] font-semibold leading-tight tracking-[-0.05em]">
                 {product.name}
               </h2>
