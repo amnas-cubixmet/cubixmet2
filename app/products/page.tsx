@@ -2,57 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SiteHeader from "../../components/home/SiteHeader";
 import SiteFooter from "../../components/home/SiteFooter";
+import { products } from "../../data/products";
 
 export const metadata: Metadata = {
   title: "Products | Cubixmet",
   description:
     "Explore CubeGears Drive Hub, BiteMyBills, CubeSites, CubixSkill, CubixLog, and Influencer by Cubixmet.",
 };
-
-const products = [
-  {
-    name: "CubeGears Drive Hub",
-    category: "Automotive Software",
-    description:
-      "Digital tools and workflows for automotive businesses and workshop operations.",
-    href: "https://cubegears-drive-hub.vercel.app/",
-  },
-  {
-    name: "BiteMyBills",
-    category: "Restaurant Management",
-    description:
-      "A digital platform for restaurant billing and everyday restaurant workflows.",
-    href: "https://resto-suite-shell-fawn.vercel.app/",
-  },
-  {
-    name: "CubeSites",
-    category: "Websites",
-    description:
-      "Explore website creation solutions for businesses and digital brands.",
-    href: "https://cubesites.cubixmet.com/",
-  },
-  {
-    name: "CubixSkill",
-    category: "Learning Platform",
-    description:
-      "A learning and skills platform from the Cubixmet product ecosystem.",
-    href: null,
-  },
-  {
-    name: "CubixLog",
-    category: "Digital Product",
-    description:
-      "A product from the Cubixmet ecosystem. More details will be announced.",
-    href: null,
-  },
-  {
-    name: "Influencer",
-    category: "Creator Tools",
-    description:
-      "An upcoming platform focused on creator and influencer workflows.",
-    href: null,
-  },
-] as const;
 
 export default function ProductsPage() {
   return (
