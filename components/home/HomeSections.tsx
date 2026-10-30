@@ -8,6 +8,9 @@ import { services } from "../../data/services";
 import { aboutContent, aboutPillars } from "../../data/about";
 import { ventures } from "../../data/ventures";
 import { projects, projectFilters } from "../../data/projects";
+import { products } from "../../data/products";
+import { freeTools } from "../../data/freeTools";
+import PortfolioDirectoryCard from "./PortfolioDirectoryCard";
 import TestimonialsSlider from "./TestimonialsSlider";
 import { homeCopy } from "../../data/homeContent";
 import { site, whatsappLink } from "../../data/site";
@@ -777,7 +780,7 @@ function ProcessSection() {
 
 function WorkSection() {
   const [portfolioFilter, setPortfolioFilter] = useState<
-    "All" | "Dynamic Website" | "Digital Marketing"
+    "All" | "Dynamic Website" | "Digital Marketing" | "Products" | "Tools"
   >("All");
   const portfolioGridRef = useRef<HTMLDivElement>(null);
 
@@ -789,11 +792,15 @@ function WorkSection() {
     );
   }, [portfolioFilter]);
 
-  const filters = projectFilters;
+  const filters = [...projectFilters, "Products", "Tools"] as const;
   const filteredProjects =
     portfolioFilter === "All"
       ? projects
-      : projects.filter((project) => project.category === portfolioFilter);
+      : portfolioFilter === "Dynamic Website" || portfolioFilter === "Digital Marketing"
+        ? projects.filter((project) => project.category === portfolioFilter)
+        : [];
+  const showProducts = portfolioFilter === "All" || portfolioFilter === "Products";
+  const showTools = portfolioFilter === "All" || portfolioFilter === "Tools";
 
   return (
     <section id="work" className="pb-20 pt-8 md:pb-28 md:pt-12" data-no-text-reveal>
@@ -937,6 +944,34 @@ function WorkSection() {
                 </div>
               </div>
             </article>
+          ))}
+
+          {showProducts && products.map((product, index) => (
+            <PortfolioDirectoryCard
+              key={`product-${product.name}`}
+              kind="Product"
+              name={product.name}
+              category={product.category}
+              description={product.description}
+              href={product.href}
+              mark={product.mark}
+              tags={["Cubixmet Product", product.category]}
+              index={filteredProjects.length + index}
+            />
+          ))}
+
+          {showTools && freeTools.map((tool, index) => (
+            <PortfolioDirectoryCard
+              key={`tool-${tool.id}`}
+              kind="Tool"
+              name={tool.name}
+              category={tool.category}
+              description={tool.description}
+              href={tool.href}
+              mark={tool.mark}
+              tags={tool.features.slice(0, 3)}
+              index={filteredProjects.length + (showProducts ? products.length : 0) + index}
+            />
           ))}
         </div>
       </div>
