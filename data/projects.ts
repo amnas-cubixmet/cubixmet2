@@ -15,6 +15,39 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "blendopia-web",
+    website: "https://www.blendopia.com/",
+    name: "Blendopia",
+    category: "Dynamic Website",
+    description:
+      "A modern, brand-focused digital experience built to present Blendopia online.",
+    tags: ["Featured", "Brand Website", "Web Design"],
+    image:
+      "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=84",
+  },
+  {
+    id: "al-masar-electrical-web",
+    website: "https://www.almasarelectrical.com/",
+    name: "Al Masar Electrical",
+    category: "Dynamic Website",
+    description:
+      "An electrical materials website featuring product categories, a catalogue, and branch information.",
+    tags: ["Saudi Arabia", "GCC Client", "Product Catalogue"],
+    image:
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=84",
+  },
+  {
+    id: "zamirzac-erp-web",
+    website: "https://demo-erp.zamirzac.com/",
+    name: "Zamirzac ERP Demo",
+    category: "Dynamic Website",
+    description:
+      "Explore the Zamirzac ERP demo environment for business management workflows.",
+    tags: ["UAE Client", "ERP", "Business Software"],
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=84",
+  },
+  {
     id: "zcards-web",
     website: "https://www.zamirzac.com/",
     video: "/videos/cardflow.mov",
