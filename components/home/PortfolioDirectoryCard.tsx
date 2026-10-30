@@ -1,3 +1,5 @@
+import CardVideoPreview from "./CardVideoPreview";
+
 type PortfolioDirectoryCardProps = {
   kind: "Product" | "Tool";
   name: string;
@@ -7,6 +9,7 @@ type PortfolioDirectoryCardProps = {
   mark: string;
   tags: readonly string[];
   index: number;
+  video?: string;
 };
 
 export default function PortfolioDirectoryCard({
@@ -18,6 +21,7 @@ export default function PortfolioDirectoryCard({
   mark,
   tags,
   index,
+  video,
 }: PortfolioDirectoryCardProps) {
   return (
     <article
@@ -55,6 +59,7 @@ export default function PortfolioDirectoryCard({
             {category}
           </span>
         </div>
+        <CardVideoPreview video={video} name={name} />
       </div>
 
       <div className="flex min-h-[205px] flex-col p-5 sm:p-6">
