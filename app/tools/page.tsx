@@ -96,12 +96,16 @@ export default function ToolsPage() {
                   </span>
                 </div>
 
-              {videoPaths.includes(tool.video ?? "") && (
+              {(
                   <div className="relative mt-6 aspect-[1.9/1] overflow-hidden rounded-[15px] border border-white/10 bg-[#101a2d]">
                     <span aria-hidden="true" className="absolute inset-0 grid place-items-center text-4xl font-bold text-[#8cc1ff]">
                       {tool.mark}
                     </span>
-                    <CardVideoPreview video={tool.video} name={tool.name} />
+                    <CardVideoPreview
+                      video={videoPaths.includes(tool.video ?? "") ? tool.video : undefined}
+                      image={tool.coverImage}
+                      name={tool.name}
+                    />
                   </div>
                 )}
                 <div className="relative mt-7 flex items-center gap-2">

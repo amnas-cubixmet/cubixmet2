@@ -7,11 +7,14 @@ export type ProductListing = {
   href: string | null;
   /** Video file in public/video/Products; automatically shown after upload. */
   video?: string;
+  /** Local cover artwork; replace path with a real screenshot when available. */
+  coverImage?: string;
 };
 
 export const products: ProductListing[] = [
   {
     name: "CubeGears Drive Hub",
+    coverImage: "/images/covers/products/cubegears-drive-hub.svg",
     video: "/video/Products/cubegears-drive-hub.mp4",
     mark: "CG",
     category: "Automotive Software",
@@ -21,6 +24,7 @@ export const products: ProductListing[] = [
   },
   {
     name: "BiteMyBills",
+    coverImage: "/images/covers/products/bitemybills.svg",
     video: "/video/Products/bitemybills.mp4",
     mark: "BB",
     category: "Restaurant Management",
@@ -30,6 +34,7 @@ export const products: ProductListing[] = [
   },
   {
     name: "CubeSites",
+    coverImage: "/images/covers/products/cubesites.svg",
     video: "/video/Products/cubesites.mp4",
     mark: "CS",
     category: "Websites",
@@ -39,6 +44,7 @@ export const products: ProductListing[] = [
   },
   {
     name: "CubixSkill",
+    coverImage: "/images/covers/products/cubixskill.svg",
     video: "/video/Products/cubixskill.mp4",
     mark: "SK",
     category: "Learning Platform",
@@ -48,6 +54,7 @@ export const products: ProductListing[] = [
   },
   {
     name: "CubixLog",
+    coverImage: "/images/covers/products/cubixlog.svg",
     video: "/video/Products/cubixlog.mp4",
     mark: "CL",
     category: "Digital Product",
@@ -57,6 +64,7 @@ export const products: ProductListing[] = [
   },
   {
     name: "Influencer",
+    coverImage: "/images/covers/products/influencer.svg",
     video: "/video/Products/influencer.mp4",
     mark: "IN",
     category: "Creator Tools",

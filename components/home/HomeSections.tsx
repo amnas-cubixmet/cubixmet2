@@ -955,6 +955,7 @@ function WorkSection({ availableVideoPaths }: { availableVideoPaths: string[] })
               description={product.description}
               href={product.href}
               mark={product.mark}
+              coverImage={product.coverImage}
               video={availableVideoPaths.includes(product.video ?? "") ? product.video : undefined}
               tags={["Cubixmet Product", product.category]}
               index={filteredProjects.length + index}
@@ -970,6 +971,7 @@ function WorkSection({ availableVideoPaths }: { availableVideoPaths: string[] })
               description={tool.description}
               href={tool.href}
               mark={tool.mark}
+              coverImage={tool.coverImage}
               video={availableVideoPaths.includes(tool.video ?? "") ? tool.video : undefined}
               tags={tool.features.slice(0, 3)}
               index={filteredProjects.length + (showProducts ? products.length : 0) + index}

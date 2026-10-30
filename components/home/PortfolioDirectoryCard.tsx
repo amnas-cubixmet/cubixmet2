@@ -10,6 +10,7 @@ type PortfolioDirectoryCardProps = {
   tags: readonly string[];
   index: number;
   video?: string;
+  coverImage?: string;
 };
 
 export default function PortfolioDirectoryCard({
@@ -22,6 +23,7 @@ export default function PortfolioDirectoryCard({
   tags,
   index,
   video,
+  coverImage,
 }: PortfolioDirectoryCardProps) {
   return (
     <article
@@ -38,7 +40,7 @@ export default function PortfolioDirectoryCard({
           aria-hidden="true"
           className="pointer-events-none absolute -bottom-28 left-1/4 h-56 w-56 rounded-full border border-[#1677FF]/20"
         />
-        <div className="relative flex items-start justify-between gap-4">
+        <div className="relative z-30 flex items-start justify-between gap-4">
           <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#87beff]">
             Cubixmet / {kind}
           </span>
@@ -59,7 +61,7 @@ export default function PortfolioDirectoryCard({
             {category}
           </span>
         </div>
-        <CardVideoPreview video={video} name={name} />
+        <CardVideoPreview video={video} image={coverImage} name={name} />
       </div>
 
       <div className="flex min-h-[205px] flex-col p-5 sm:p-6">
