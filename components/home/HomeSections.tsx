@@ -778,7 +778,7 @@ function ProcessSection() {
   );
 }
 
-function WorkSection() {
+function WorkSection({ availableVideoPaths }: { availableVideoPaths: string[] }) {
   const [portfolioFilter, setPortfolioFilter] = useState<
     "All" | "Dynamic Website" | "Digital Marketing" | "Products" | "Tools"
   >("All");
@@ -874,7 +874,7 @@ function WorkSection() {
                   name={project.name}
                   image={project.image}
                   fallbackImage={project.fallbackImage}
-                  video={project.video}
+                  video={availableVideoPaths.includes(project.video ?? "") ? project.video : undefined}
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0b1120]/80 via-transparent to-transparent" />
                 {project.website && (
@@ -955,6 +955,7 @@ function WorkSection() {
               description={product.description}
               href={product.href}
               mark={product.mark}
+              video={availableVideoPaths.includes(product.video ?? "") ? product.video : undefined}
               tags={["Cubixmet Product", product.category]}
               index={filteredProjects.length + index}
             />
@@ -969,6 +970,7 @@ function WorkSection() {
               description={tool.description}
               href={tool.href}
               mark={tool.mark}
+              video={availableVideoPaths.includes(tool.video ?? "") ? tool.video : undefined}
               tags={tool.features.slice(0, 3)}
               index={filteredProjects.length + (showProducts ? products.length : 0) + index}
             />
@@ -1170,7 +1172,7 @@ function ContactSection() {
   );
 }
 
-export default function HomeSections() {
+export default function HomeSections({ availableVideoPaths }: { availableVideoPaths: string[] }) {
   useReveal();
   return (
     <>
@@ -1180,7 +1182,7 @@ export default function HomeSections() {
       <ProductToolsSection />
       <ServicesSection />
       <ProcessSection />
-      <WorkSection />
+      <WorkSection availableVideoPaths={availableVideoPaths} />
       <TestimonialsSlider />
       <TeamSection />
       <ImpactSection />
