@@ -9,11 +9,14 @@ export type FreeTool = {
   mark: string;
   action: string;
   status: "available" | "coming-soon";
+  /** Video file in public/video/Tools; automatically shown after upload. */
+  video?: string;
 };
 
 export const freeTools: FreeTool[] = [
   {
     id: "qr-barcode",
+    video: "/video/Tools/qr-barcode.mp4",
     name: "Free QR & Barcode Generator",
     category: "Business & Marketing",
     description:
@@ -32,6 +35,7 @@ export const freeTools: FreeTool[] = [
   },
   {
     id: "ticket-certificate",
+    video: "/video/Tools/ticket-certificate.mp4",
     name: "Free Ticket & Certificate Generator",
     category: "Events & Documents",
     description:
@@ -50,6 +54,7 @@ export const freeTools: FreeTool[] = [
   },
   {
     id: "cubecutter",
+    video: "/video/Tools/cubecutter.mp4",
     name: "CubeCutter",
     category: "Design & Social Media",
     description:
@@ -68,6 +73,7 @@ export const freeTools: FreeTool[] = [
   },
   {
     id: "vcf-generator",
+    video: "/video/Tools/vcf-generator.mp4",
     name: "VCF Generator Pro",
     category: "Contacts & Productivity",
     description:
@@ -86,6 +92,7 @@ export const freeTools: FreeTool[] = [
   },
   {
     id: "nutri-pro",
+    video: "/video/Tools/nutri-pro.mp4",
     name: "Nutri Pro",
     category: "Nutrition & Wellness",
     description:
@@ -104,6 +111,7 @@ export const freeTools: FreeTool[] = [
   },
   {
     id: "cenora-op",
+    video: "/video/Tools/cenora-op.mp4",
     name: "Cenora OP Poster Creator",
     category: "Healthcare Operations",
     description:
@@ -122,6 +130,7 @@ export const freeTools: FreeTool[] = [
   },
   {
     id: "pdf-converter",
+    video: "/video/Tools/pdf-converter.mp4",
     name: "Free PDF Converter",
     category: "Files & Documents",
     description:
