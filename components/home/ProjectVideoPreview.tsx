@@ -11,10 +11,9 @@ type ProjectVideoPreviewProps = {
 };
 
 /**
- * Video-backed portfolio cards show the real video (no poster/preview image).
- * IntersectionObserver starts muted playback only when most of the card is
- * visible, and pauses playback when the visitor scrolls away or switches tabs.
- * Preload "none" prevents all of the large MOV assets from loading on page load.
+ * Keep a cover visible until the Dynamic Website video is ready.
+ * Fade video in after loading, play muted when visible, and fall back to the
+ * cover if video playback fails. Avoid preloading large media assets.
  */
 export default function ProjectVideoPreview({
   name,
@@ -25,6 +24,7 @@ export default function ProjectVideoPreview({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasPlaybackError, setHasPlaybackError] = useState(false);
   const [hasImageError, setHasImageError] = useState(false);
+  const [readyVideo, setReadyVideo] = useState<string | null>(null);
 
   useEffect(() => {
     if (!video || hasPlaybackError) return;
@@ -76,9 +76,13 @@ export default function ProjectVideoPreview({
     };
   }, [video, hasPlaybackError]);
 
-  // Projects without walkthrough videos retain their existing thumbnails.
-  if (!video || hasPlaybackError) {
-    return (
+  // Keep the cover in place while the video loads and as an error fallback.
+  // A loaded video fades in on top, matching Products and Tools previews.
+  const videoActive = Boolean(video && !hasPlaybackError);
+  const videoReady = videoActive && readyVideo === video;
+
+  return (
+    <>
       <Image
         src={hasImageError && fallbackImage ? fallbackImage : image}
         alt={`${name} portfolio preview`}
@@ -88,22 +92,25 @@ export default function ProjectVideoPreview({
         fill
         sizes="(max-width: 767px) calc(100vw - 36px), (max-width: 1279px) 50vw, 33vw"
         loading="lazy"
-        className="object-cover transition-transform duration-700 group-hover:scale-105"
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
       />
-    );
-  }
-
-  return (
-    <video
-      ref={videoRef}
-      src={video}
-      playsInline
-      muted
-      loop
-      preload="none"
-      aria-label={`${name} project walkthrough, plays automatically when visible`}
-      className="absolute inset-0 h-full w-full bg-[#101723] object-cover"
-      onError={() => setHasPlaybackError(true)}
-    />
+      {videoActive && video && (
+        <video
+          ref={videoRef}
+          src={video}
+          playsInline
+          muted
+          loop
+          preload="none"
+          aria-label={`${name} project walkthrough, plays automatically when visible`}
+          className={
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 " +
+            (videoReady ? "opacity-100" : "opacity-0")
+          }
+          onLoadedData={() => setReadyVideo(video)}
+          onError={() => setHasPlaybackError(true)}
+        />
+      )}
+    </>
   );
 }
